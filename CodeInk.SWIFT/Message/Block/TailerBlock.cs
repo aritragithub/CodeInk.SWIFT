@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace CodeInk.SWIFT.Message
 {
-    public class TailerBlock : FinMessageBlock
+    /// <summary>
+    /// fin message trailer block
+    /// </summary>
+    public class TrailerBlock : FinMessageBlock
     {
-        private const string userBlockRegex = @"^{5:(?<data>(?:{[\w]{1,3}:[\w]+})+)}$";
+        private const string trailerBlockRegex = @"{5:(?<data>(?:{[\w]{1,3}:[\w]+})+)}$";
         public Dictionary<string, string> Tags;
 
-        public TailerBlock()
+        public TrailerBlock()
         {
             Tags = new Dictionary<string, string>();
         }
@@ -23,9 +26,8 @@ namespace CodeInk.SWIFT.Message
 
         public override void BuildBlock(string record)
         {
-            var userRegex = new Regex(userBlockRegex);
+            var userRegex = new Regex(trailerBlockRegex);
             var match = userRegex.Match(record);
-
 
             if (!match.Success)
                 throw new FormatException("invalid Tailer block!");
@@ -52,6 +54,11 @@ namespace CodeInk.SWIFT.Message
             Tags.TryGetValue(tagId, out data);
 
             return data;
+        }
+
+        public override string BlockPattern
+        {
+            get { return trailerBlockRegex; }
         }
     }
 }

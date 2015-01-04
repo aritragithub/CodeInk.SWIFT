@@ -43,12 +43,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FinFile.cs" />
-    <Compile Include="Message\ApplicationBlock.cs" />
-    <Compile Include="Message\BasicBlock.cs" />
-    <Compile Include="Message\BodyBlock.cs" />
+    <Compile Include="Message\Block\ApplicationBlock.cs" />
+    <Compile Include="Message\Block\BasicBlock.cs" />
+    <Compile Include="Message\Block\BodyBlock.cs" />
+    <Compile Include="Message\Block\FinMessageBlock.cs" />
+    <Compile Include="Message\Field.cs" />
+    <Compile Include="Message\Fields\Field20.cs" />
     <Compile Include="Message\FinMessage.cs" />
-    <Compile Include="Message\TailerBlock.cs" />
-    <Compile Include="Message\UserBlock.cs" />
+    <Compile Include="Message\Block\TailerBlock.cs" />
+    <Compile Include="Message\Block\UserBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

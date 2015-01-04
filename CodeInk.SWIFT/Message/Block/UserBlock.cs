@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace CodeInk.SWIFT.Message
 {
+    /// <summary>
+    /// fin message user block
+    /// </summary>
     public class UserBlock : FinMessageBlock
     {
         private const string userBlockRegex = @"^{3:(?<data>(?:{[\d]{1,3}:[\w]+})+)}$";
@@ -52,6 +55,11 @@ namespace CodeInk.SWIFT.Message
             Tags.TryGetValue(tagId, out data);
 
             return data;
+        }
+
+        public override string BlockPattern
+        {
+            get { return @"{3:({[\d]{1,3}:[\w]+})+}"; }
         }
     }
 }

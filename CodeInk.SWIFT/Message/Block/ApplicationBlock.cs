@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CodeInk.SWIFT.Message
 {
+    /// <summary>
+    /// fin message application block
+    /// </summary>
     public class ApplicationBlock : FinMessageBlock
     {
         const string blockId = "2";
 
-        private const string inputAppBlockRegex = @"^{2:(?<io>[I])(?<mtype>[\d]{3})(?<recadd>[\w]{12})(?<msgp>[SNU]{1})(?<deli>[123]{1})(?<obs>[\d]{3})}$";
-        private const string outputAppBlockRegex = @"^{2:(?<io>[O])(?<mtype>[\d]{3})(?<itime>[\d]{4})(?<mir>[\w]{28})(?<odate>[\d]{6})(?<otime>[\d]{4})(?<msgp>[SNU]{1})}$";
+        private const string inputAppBlockRegex = @"{2:(?<io>[I])(?<mtype>[\d]{3})(?<recadd>[\w]{12})(?<msgp>[SNU]{1})(?<deli>[123]{1})(?<obs>[\d]{3})}";
+        private const string outputAppBlockRegex = @"{2:(?<io>[O])(?<mtype>[\d]{3})(?<itime>[\d]{4})(?<mir>[\w]{28})(?<odate>[\d]{6})(?<otime>[\d]{4})(?<msgp>[SNU]{1})}";
 
         public override string BlockID
         {
@@ -37,7 +36,7 @@ namespace CodeInk.SWIFT.Message
             if (IOType == "I")
             {
                 ReceiverAddress = match.Groups["recadd"].Value;
-                DeliveryMonitoing = match.Groups["deli"].Value;
+                DeliveryMonitoring = match.Groups["deli"].Value;
                 ObsolescencePeriod = match.Groups["obs"].Value;
             }
             else
@@ -85,7 +84,7 @@ namespace CodeInk.SWIFT.Message
         /// 2 = Delivery notification (MT011)
         /// 3 = Both valid = U1 or U3, N2 or N
         /// </remarks>
-        public string DeliveryMonitoing { get; set; }
+        public string DeliveryMonitoring { get; set; }
 
         /// <summary>
         /// Obsolescence period (Input message)
@@ -118,5 +117,10 @@ namespace CodeInk.SWIFT.Message
         /// Output time with respect to Receiver (Output message)
         /// </summary>
         public string OutputTime { get; set; }
+
+        public override string BlockPattern
+        {
+            get { return @"{2:(?:[\w]{47}|[\w]{21})}"; }
+        }
     }
 }

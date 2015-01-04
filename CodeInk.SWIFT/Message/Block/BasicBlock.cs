@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CodeInk.SWIFT.Message
 {
+    /// <summary>
+    /// fin message basic block
+    /// </summary>
     public class BasicBlock : FinMessageBlock
     {
-        private const string basicBlockRegex = @"^{1:(?<appid>[FAL]{1})(?<serviceid>[\d]{2})(?<ltAddress>[A-Za-z]{12})(?<sessionno>[\d]{4})(?<seqno>[\d]{6})}$";
-
-        private const string _blockId = "1";
+        private const string basicBlockRegex = @"{1:(?<appid>[FAL]{1})(?<serviceid>[\d]{2})(?<ltAddress>[A-Za-z]{12})(?<sessionno>[\d]{4})(?<seqno>[\d]{6})}";
 
         /// <summary>
         /// Build a BasicBlock
@@ -35,9 +32,8 @@ namespace CodeInk.SWIFT.Message
         {
             get
             {
-                return _blockId;
+                return "1";
             }
-
         }
 
         /// <summary>
@@ -75,5 +71,10 @@ namespace CodeInk.SWIFT.Message
         /// </summary>
         public string SequenceNumber { get; set; }
 
+
+        public override string BlockPattern
+        {
+            get { return @"{1:[\w]{25}}"; }
+        }
     }
 }
